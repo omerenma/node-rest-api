@@ -51,15 +51,11 @@ router.get('/:productId', (req, res, next) => {
 // EDIT by id route
 router.patch('/:productId', (req, res, next) => {
     const id = req.params.productId;
-    
-    // const updateOps = {};
-    // for(const ops of req.body){
-    //     updateOps[ops.propName] = ops.value;
-
-    // }
-    // ProductSchema.update({_id:id}, {$set:updateOps})
-    // .then(res => res.json(res))
-    // .then(err => res.json(err.status))  
+    ProductSchema.update({_id:id}, {$set:{name:req.body.name, price:req.body.price, quantity:req.body.quantity}})
+        .then(result => res.json({result}))
+        .catch(err => {
+            res.status(500).json({message:err.status})
+        })
 })
 
 // DELETE by id route
